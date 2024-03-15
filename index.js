@@ -13,7 +13,7 @@
  * 
  * Aşağıdaki kodlar bu görevin nasıl yapılacağına örnek olacaktır
  * Bu fonskiyon 'asas' dönmeli(return)
-*/
+*/ 
 
 function ilkiniDon(stringArray, callback) {
   return callback(stringArray[0])
@@ -31,7 +31,7 @@ console.log('örnek görev:', ilkiniDon(['as','sa'],function(metin){return metin
   
   1. skor1 ve skor2 arasındaki fark nedir?
   
-  2. Hangisi bir closure kullanmaktadır? Nasıl tarif edebilirsin? (yarınki derste öğreneceksin :) )
+  2. Hangisi bir closure kullanmaktadır? Nasıl tarif edebilirsin? (yarınki derste öğreneceksin :) ) 1.cisi closure kullanmaktadir
   
   3. Hangi durumda skor1 tercih edilebilir? Hangi durumda skor2 daha mantıklıdır?
 */
@@ -64,11 +64,11 @@ Aşağıdaki takimSkoru() fonksiyonununda aşağıdakileri yapınız:
 Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyonu olarak da kullanılacak
 */
 
-function takimSkoru(/*Kodunuzu buraya yazınız*/){
-    /*Kodunuzu buraya yazınız*/
+function takimSkoru(){
+  let sonuc= Math.floor(Math.random()*15+10);
+  return sonuc;
 }
-
-
+takimSkoru()
 
 
 /* Görev 3: macSonucu() 
@@ -86,11 +86,26 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
 }
 */ 
 
-function macSonucu(/*Kodunuzu buraya yazınız*/){
-  /*Kodunuzu buraya yazınız*/
+function macSonucu(abc, ceyrekSayisi) {
+  let EvSahibi = 0;
+  let KonukTakim =0;
+
+  for (let i = 0; i < ceyrekSayisi; i++) {
+      const evSahibiSkor = abc();
+      const konukTakimSkor = abc();
+      
+      EvSahibi += evSahibiSkor;
+      KonukTakim += konukTakimSkor;
+  }
+
+  return {
+      "EvSahibi": EvSahibi,
+      "KonukTakim": KonukTakim
+  };
 }
 
-
+const sonuc = macSonucu(takimSkoru, 4);
+console.log(sonuc);
 
 
 
@@ -104,14 +119,28 @@ Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
 Örneğin: periyotSkoru(takimSkoru) çalıştırınca aşağıdaki object'i dönmeli
 {
   "EvSahibi": 18,
-  "KonukTakim": 12
+  "KonukTakim": 12  
 }
   */
 
+let EvSahibi = 0;
+let KonukTakim = 0;
 
-function periyotSkoru(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
 
+function periyotSkoru(takimSkoru) {
+  
+   let evSahibiSkor = takimSkoru("EvSahibi");
+   let konukTakimSkor = takimSkoru("KonukTakim");
+
+   EvSahibi += evSahibiSkor;
+    KonukTakim += konukTakimSkor;
+  
+    return {
+
+            "EvSahibi" : EvSahibi,
+            "KonukTakim" : KonukTakim,
+        
+}
 }
 
 
@@ -145,15 +174,44 @@ MAÇ UZAR ise skorTabelasi(periyotSkoru,takimSkoru,4)
 ]
 ] */
 // NOTE: Bununla ilgili bir test yoktur. Eğer logladığınız sonuçlar yukarıdakine benziyor ise tmamlandı sayabilirsiniz.
+                      
+function skorTabelasi(periyot, takim, ceyrek) {
+let tabela =[];
+let home = 0;
+let away = 0;
 
-function skorTabelasi(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
+for (let i=0; i<ceyrek; i++){
+  let periyotSonuc = periyot(takim)
+
+  home += periyotSonuc.EvSahibi,
+  away += periyotSonuc.KonukTakim
+
+  tabela.push(`${i+1}.Periyot: Ev Sahibi ${periyotSonuc.EvSahibi} - KonukTakim ${periyotSonuc.KonukTakim}`)
 }
 
 
 
 
-/* Aşağıdaki satırları lütfen değiştirmeyiniz*/
+while (home==away){
+    let sayac =1;
+    let periyotSonuc =periyot(takim)
+
+    home += periyotSonuc.EvSahibi,
+    away += periyotSonuc.KonukTakim
+
+  tabela.push(`${sayac}. Uzatma:Ev Sahibi ${periyotSonuc.EvSahibi} - Konuk Takim ${periyotSonuc.KonukTakim}`)
+}
+
+tabela.push(`Mac Sonucu:Ev Sahibi ${home} - Konuk Takim ${away}`)
+
+return tabela
+
+}
+
+console.log(skorTabelasi(periyotSkoru,takimSkoru,4))
+
+
+
 function sa(){
   console.log('Kodlar çalışıyor');
   return 'as';

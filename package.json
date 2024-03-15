@@ -18,5 +18,8 @@
     "eslint": "8.13.0",
     "jest": "27.5.1",
     "nodemon": "2.0.15"
+  },
+  "dependencies": {
+    "test": "^3.3.0"
   }
 }
